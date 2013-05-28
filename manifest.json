@@ -15,7 +15,7 @@
       "matches": ["http://forum.mods.de/*"],
       "css": ["enhancer.css"],
       "js": ["jquery.min.js", "enhancer.js"],
-      "run_at": "document_end"
+      "run_at": "document_start"
     }
   ]
 }

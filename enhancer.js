@@ -29,7 +29,7 @@ $(function() {
             $("#adnet_top").hide().next().find("table.std").hide();
         }
 
-        if(items['hide_ads']) {
+        if(items['hide_ads'] && document.URL.indexOf("thread.php") !== -1) {
             $("tr.color3:not([username]):not(.hidden_user)").hide().next().hide();
         }
         
