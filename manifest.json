@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+
+  "name": "mods.de enhancer",
+  "description": "Scripts to enhance the mods.de forums.",
+  "version": "1.0",
+  "options_page": "preferences.html",
+  "permissions": [
+    "storage"
+  ],
+  "homepage_url": "http://forum.mods.de/bb",
+  "icons": { "48": "icon48.png", "128": "icon128.png" },
+  "content_scripts": [
+    {
+      "matches": ["http://forum.mods.de/*"],
+      "css": ["enhancer.css"],
+      "js": ["jquery.min.js", "enhancer.js"],
+      "run_at": "document_end"
+    }
+  ]
+}

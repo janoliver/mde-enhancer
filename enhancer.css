@@ -1,0 +1,12 @@
+.postcounter {
+    color:yellow;
+    font-size:11px;
+    display:inline-block;
+    padding-left:10px;
+}
+
+.hidden_user td {
+    height:16px;
+    padding:2px;
+    cursor:pointer;
+}

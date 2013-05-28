@@ -1,0 +1,40 @@
+<html>
+<head>
+    <title>Mods.de Enhancer Options</title>
+    <script src="jquery.min.js" type="text/javascript"></script>
+    <script src="preferences.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+    <div id="status"></div>
+
+    <h1>Enable/Disable Features</h1>
+    <div>
+        <label for="post_counter">Show the post number</label>
+        <input type="checkbox" id="post_counter"/>
+    </div>
+    <div>
+        <label for="hide_header">Hide headers</label>
+        <input type="checkbox" id="hide_header"/>
+    </div>
+    <div>
+        <label for="hide_ads">Hide in-thread advertisement</label>
+        <input type="checkbox" id="hide_ads"/>
+    </div>
+
+    <h1>Hide Users</h1>
+    <div>
+        <ul id="hidden_users">
+            
+        </ul>
+        <label for="hide_header">Add user to hide:</label>
+        <input type="text" id="add_hidden_user_text"/> 
+        <button id="add_hidden_user">Add</button>
+    </div>
+
+    <button id="save">Save</button>
+</body>
+
+
+</html>
