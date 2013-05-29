@@ -6,8 +6,8 @@ $(function() {
         "post_counter": "Show the post number.",
         "hide_header": "Hide headers.",
         "hide_ads": "Hide in-thread advertisement.",
-        "quick_reply": "Show the quick reply box.",
-        "quick_edit": "Use the quick edit functionality."
+        "quick_reply": "Show the quick reply box."
+        //"quick_edit": "Use the quick edit functionality."
     }
 
     var status = $("#status");
