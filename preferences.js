@@ -1,13 +1,28 @@
 
 
 $(function() {
+
+    var bool_preferences = {
+        "post_counter": "Show the post number.",
+        "hide_header": "Hide headers.",
+        "hide_ads": "Hide in-thread advertisement.",
+        "quick_reply": "Show the quick reply box.",
+        "quick_edit": "Use the quick edit functionality."
+    }
+
     var status = $("#status");
 
     // restore options
     chrome.storage.sync.get(null, function(items) {
-        $("#post_counter").prop('checked', items['post_counter']);
-        $("#hide_header").prop('checked', items['hide_header']);
-        $("#hide_ads").prop('checked', items['hide_ads']);
+
+        // print and restore the checkboxes for boolean settings
+        var template = $(".template.checkbox_setting");
+        $.each(bool_preferences, function(index, value) {
+            var setting_dom = template.clone().removeClass("template");
+            setting_dom.find("label").attr("for", index).text(value);
+            setting_dom.find("input").attr("id", index).prop('checked', items[index]);
+            setting_dom.insertAfter(template);
+        });
 
         // hidden users
         if(items['hidden_users'])
@@ -21,9 +36,10 @@ $(function() {
     $("#save").click(function() {
         var settings = {};
 
-        settings['post_counter'] = $("#post_counter").is(":checked");
-        settings['hide_header'] = $("#hide_header").is(":checked");
-        settings['hide_ads'] = $("#hide_ads").is(":checked");
+        // set the boolean settings
+        $.each(bool_preferences, function(index, value) {
+            settings[index] = $("#"+index).is(":checked");
+        });
 
         // find users to hide
         settings['hidden_users'] = [];
