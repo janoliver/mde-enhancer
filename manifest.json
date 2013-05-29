@@ -17,5 +17,8 @@
       "js": ["jquery.min.js", "enhancer.js"],
       "run_at": "document_start"
     }
-  ]
+  ],
+  "background": {
+    "scripts": ["jquery.min.js", "background.js"]
+  }
 }

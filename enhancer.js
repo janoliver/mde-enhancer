@@ -24,17 +24,12 @@ $(function() {
         
         if(items['hide_ads'])
             hideInthreadAds();
-            
+        
+        if(items['quick_reply'])
+            enableQuickReply();
     });
 
-
-
-    // other functionality
-
-    // show hidden post
-    /*$(document).on("click", ".hidden_user", function() {
-        $(this).hide().prev().show().prev().show();
-    });*/
+    
     
 });
 
@@ -55,6 +50,8 @@ function showPostCounter(tr_element, index) {
  * @param  {array of hidden user names} hidden_users
  */
 function hideUsers(tr_element, hidden_users) {
+    if(document.URL.indexOf("thread.php") === -1)
+        return;
     var username = tr_element.attr("username");
 
     if($.inArray(username, hidden_users) >= 0) {
@@ -84,6 +81,53 @@ function hideHeader() {
  * Hides the in-thread advertisement
  */
 function hideInthreadAds() {
-    if(document.URL.indexOf("thread.php") !== -1)
-        $("tr.color3:not([username]):not(.hidden_user)").hide().next().hide();
+    if(document.URL.indexOf("thread.php") === -1)
+        return;
+    $("tr.color3:not([username]):not(.hidden_user)").hide().next().hide();
+}
+
+function enableQuickReply() {
+    if(document.URL.indexOf("thread.php") === -1)
+        return;
+
+    chrome.extension.sendRequest({cmd: "quick_reply"}, function(html){
+        var doc_object;
+
+        // create, modify and insert the form
+        var form = $(html);
+        form.insertBefore($("form[action^='thread.php']")).hide();
+
+        // first, get the xml of the document.
+        var xml_url = document.URL.replace("bb/", "bb/xml/");
+        $.get(xml_url, function(data) {
+            doc_object = $(data);
+
+            var newreply_token = doc_object.find("token-newreply").attr('value');
+            var thread_id = doc_object.find("thread").attr("id");
+
+            form.find("input[name='token']").val(newreply_token);
+            form.find("input[name='TID']").val(thread_id);
+
+            form.show();
+
+            // add click listeners to the quote buttons
+            $("a[href*='newreply.php?PID']").click(function(e) {
+                e.preventDefault();
+
+                var pid_pattern = /PID=(\d+)/;
+                var pid = pid_pattern.exec($(this).attr("href"))[1];
+
+                // find the post content, author
+                var post = doc_object.find("post[id='" + pid + "']");
+                var quote_text = post.find("content").text();
+                var quote_author = post.find("user").text();
+                form.find("textarea").focus().append("[quote=" + thread_id + "," + pid +
+                    ",\"" + quote_author + "\"][b]\n" + quote_text + "\n[/b][/quote]\n");
+                
+            });
+
+        }, "xml");
+
+        
+    });
 }
